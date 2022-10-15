@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IOnOffDevice>(new OnOffTcpIpFactory().Create());
+builder.Services.AddSingleton<IOnOffDevice>(new OnOffRpiGPIOFactory().Create());
 builder.Services.AddSingleton<WebSocketOnOffService>();
 
 var app = builder.Build();
