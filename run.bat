@@ -1,0 +1,1 @@
+dotnet run --project ./IotOnOff.WebApi/IotOnOff.WebApi.csproj
