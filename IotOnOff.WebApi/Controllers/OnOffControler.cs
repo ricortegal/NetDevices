@@ -75,21 +75,19 @@ public class OnOffControler : ControllerBase
         if (estado == ON)
         {
             await _device.SetOn();
-            _logger.LogInformation("El dispositivo est· encendido. peticiÛn de GET");
+            _logger.LogInformation("El dispositivo est√° encendido. petici√≥n de GET");
             return Ok(ON);
         }
         else if (estado == OFF)
         {
             await _device.SetOff();
-            _logger.LogInformation("El dispositivo est· apagado. peticiÛn de GET");
+            _logger.LogInformation("El dispositivo est√° apagado. petici√≥n de GET");
             return Ok(OFF);
         }
         else
             return new BadRequestObjectResult("estado solamente puede tomar valor on o off");
 
     }
-
-
 
 
 }
