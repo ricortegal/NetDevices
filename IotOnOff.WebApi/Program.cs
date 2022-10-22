@@ -33,7 +33,9 @@ app.UseSwaggerUI(
     });
 
 
-app.UseCors();
+app.UseCors(x => x.AllowAnyHeader()
+                   .AllowAnyOrigin()
+                   .AllowAnyMethod());
 
 app.UseWebSockets();
 
