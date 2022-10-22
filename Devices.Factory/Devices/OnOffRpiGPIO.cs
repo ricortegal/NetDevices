@@ -9,7 +9,9 @@ public class OnOffRpiGPIO : IOnOffDevice
 
     GpioController _controller;
 
-    private const int PIN = 5;
+    private const int PIN_SALIDA = 5;
+    private const int PIN_ENTRADA = 21;
+
     private const string ON = "on";
     private const string OFF = "off";
 
@@ -20,7 +22,9 @@ public class OnOffRpiGPIO : IOnOffDevice
     public OnOffRpiGPIO()
     {
         _controller = new GpioController();
-        _controller.OpenPin(PIN, PinMode.Output);
+        _controller.OpenPin(PIN_SALIDA, PinMode.Output);
+        _controller.OpenPin(PIN_ENTRADA, PinMode.InputPullDown);
+        _controller.RegisterCallbackForPinValueChangedEvent(PIN_ENTRADA, PinEventTypes.Rising, PulsadoFisico);
     }
 
     public string State
@@ -36,6 +40,14 @@ public class OnOffRpiGPIO : IOnOffDevice
         }
     }
 
+    public PinChangeEventHandler PulsadoFisico { get; private set; } = (s, pin) =>
+        {
+            if(pin.PinNumber == PIN_ENTRADA)
+            {
+
+            }
+        };
+
     private void OnStateChange()
     {
         StateChangeEvent?.Invoke(this, new EstadoEventArgs(_state));
@@ -43,13 +55,13 @@ public class OnOffRpiGPIO : IOnOffDevice
 
     public async Task SetOff()
     {
-        _controller.Write(PIN, PinValue.Low);
+        _controller.Write(PIN_SALIDA, PinValue.Low);
         State = ON;
     }
 
     public async Task SetOn()
     {
-        _controller.Write(PIN, PinValue.High);
+        _controller.Write(PIN_SALIDA, PinValue.High);
         State = OFF;
     }
 

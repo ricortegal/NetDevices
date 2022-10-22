@@ -8,15 +8,17 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+// Add services to the container.
+builder.Services.AddCors();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IOnOffDevice>(new OnOffRpiGPIOFactory().Create());
+builder.Services.AddSingleton<IOnOffDevice>(new OnOffTcpIpFactory().Create());
 builder.Services.AddSingleton<WebSocketOnOffService>();
+
 
 var app = builder.Build();
 
@@ -40,6 +42,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
 
